@@ -30,6 +30,9 @@ function normalizeRow(row) {
     if (typeof v === 'bigint') out[k] = Number(v);
     else out[k] = v;
   }
+  // Extract name from professional_persona: "First Last, a ..." or "First Last is ..."
+  const nameMatch = out.professional_persona?.match(/^([A-Z][a-zÀ-ÿ'-]+(?:\s+[A-Z][a-zÀ-ÿ'-]+)+)[,\s]/);
+  out.name = nameMatch ? nameMatch[1] : 'Unknown';
   return out;
 }
 

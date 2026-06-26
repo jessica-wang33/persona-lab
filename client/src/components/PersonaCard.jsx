@@ -1,6 +1,6 @@
 export default function PersonaCard({ persona, selected, onClick }) {
   const loading = !persona.avatarUrl && !persona.avatarError;
-  const name = formatName(persona);
+  const name = persona.name || 'Unknown';
   const occupation = formatOccupation(persona.occupation);
 
   return (
@@ -65,14 +65,6 @@ export default function PersonaCard({ persona, selected, onClick }) {
   );
 }
 
-function formatName(persona) {
-  // Dataset has no name field — derive initials-style placeholder from uuid
-  const seed = persona.id?.slice(0, 8) || 'person';
-  const firstNames = ['Alex', 'Jordan', 'Morgan', 'Taylor', 'Casey', 'Riley', 'Quinn', 'Avery', 'Blake', 'Cameron'];
-  const lastNames = ['Chen', 'Rivera', 'Johnson', 'Patel', 'Williams', 'Kim', 'Garcia', 'Smith', 'Lee', 'Brown'];
-  const h = seed.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  return `${firstNames[h % firstNames.length]} ${lastNames[(h >> 2) % lastNames.length]}`;
-}
 
 function getInitialsAvatar(persona) {
   const emojis = ['👤', '🧑', '👩', '👨', '🙍'];

@@ -16,7 +16,7 @@ export default function ChatPanel({ persona, onClose }) {
     inputRef.current?.focus();
   }, [persona?.id]);
 
-  const name = getPersonaName(persona);
+  const name = persona.name || 'Unknown';
 
   async function sendMessage(e) {
     e?.preventDefault();
@@ -176,10 +176,3 @@ function fmt(str) {
   return str.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
-function getPersonaName(persona) {
-  const seed = persona.id?.slice(0, 8) || 'person';
-  const firstNames = ['Alex', 'Jordan', 'Morgan', 'Taylor', 'Casey', 'Riley', 'Quinn', 'Avery', 'Blake', 'Cameron'];
-  const lastNames = ['Chen', 'Rivera', 'Johnson', 'Patel', 'Williams', 'Kim', 'Garcia', 'Smith', 'Lee', 'Brown'];
-  const h = seed.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  return `${firstNames[h % firstNames.length]} ${lastNames[(h >> 2) % lastNames.length]}`;
-}

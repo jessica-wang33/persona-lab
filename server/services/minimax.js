@@ -47,11 +47,12 @@ export async function chatWithPersona(persona, messages) {
     { headers: getHeaders() }
   );
 
-  return res.data.choices[0].message.content;
+  const raw = res.data.choices[0].message.content;
+  return raw.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
 }
 
 function buildSystemPrompt(p) {
-  return `You are ${p.sex === 'Male' ? 'a man' : 'a woman'}, ${p.age} years old, living in ${p.city}, ${p.state}.
+  return `You are ${p.name}, a ${p.sex === 'Male' ? 'man' : 'woman'}, ${p.age} years old, living in ${p.city}, ${p.state}.
 
 Occupation: ${p.occupation.replace(/_/g, ' ')}
 Education: ${p.education_level.replace(/_/g, ' ')}${p.bachelors_field && p.bachelors_field !== 'N/A' ? `, ${p.bachelors_field}` : ''}
