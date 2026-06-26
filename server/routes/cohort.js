@@ -1,5 +1,5 @@
 const express = require('express');
-const { fetchPersonasByAge } = require('../services/huggingface');
+const { fetchPersonasByAge } = require('../services/personas');
 const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
