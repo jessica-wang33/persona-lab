@@ -1,6 +1,6 @@
-const express = require('express');
-const { fetchPersonasByAge } = require('../services/personas');
-const { v4: uuidv4 } = require('uuid');
+import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
+import { fetchPersonasByAge } from '../services/personas.js';
 
 const router = express.Router();
 
@@ -22,9 +22,9 @@ router.post('/generate', async (req, res) => {
     const result = personas.map((p) => ({ ...p, id: uuidv4() }));
     res.json({ personas: result });
   } catch (err) {
-    console.error('Cohort generation error:', err.message);
-    res.status(500).json({ error: err.message || 'Failed to generate cohort' });
+    console.error('Cohort generation error:', err);
+    res.status(500).json({ error: err.message || String(err) || 'Failed to generate cohort' });
   }
 });
 
-module.exports = router;
+export default router;

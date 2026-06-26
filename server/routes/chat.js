@@ -1,5 +1,5 @@
-const express = require('express');
-const { chatWithPersona } = require('../services/minimax');
+import express from 'express';
+import { chatWithPersona } from '../services/minimax.js';
 
 const router = express.Router();
 
@@ -18,4 +18,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

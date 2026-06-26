@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const BASE = 'https://api.minimax.io/v1';
 
@@ -9,7 +9,7 @@ function getHeaders() {
   };
 }
 
-async function generateAvatar(persona) {
+export async function generateAvatar(persona) {
   const prompt = [
     `Realistic professional headshot portrait of a ${persona.age}-year-old ${persona.sex}`,
     `working as a ${persona.occupation.replace(/_/g, ' ')}`,
@@ -33,7 +33,7 @@ async function generateAvatar(persona) {
   return urls[0];
 }
 
-async function chatWithPersona(persona, messages) {
+export async function chatWithPersona(persona, messages) {
   const systemPrompt = buildSystemPrompt(persona);
 
   const res = await axios.post(
@@ -51,7 +51,7 @@ async function chatWithPersona(persona, messages) {
 }
 
 function buildSystemPrompt(p) {
-  return `You are ${p.sex === 'Male' ? 'a man' : 'a woman'} named after your persona, ${p.age} years old, living in ${p.city}, ${p.state}.
+  return `You are ${p.sex === 'Male' ? 'a man' : 'a woman'}, ${p.age} years old, living in ${p.city}, ${p.state}.
 
 Occupation: ${p.occupation.replace(/_/g, ' ')}
 Education: ${p.education_level.replace(/_/g, ' ')}${p.bachelors_field && p.bachelors_field !== 'N/A' ? `, ${p.bachelors_field}` : ''}
@@ -65,5 +65,3 @@ Career goals: ${p.career_goals_and_ambitions}
 
 You are participating in a research interview. Stay fully in character — answer naturally and authentically based on your background, personality, and life experience. Be conversational, not overly formal. Express opinions, preferences, and emotions consistent with who you are.`;
 }
-
-module.exports = { generateAvatar, chatWithPersona };

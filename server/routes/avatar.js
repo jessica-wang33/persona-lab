@@ -1,5 +1,5 @@
-const express = require('express');
-const { generateAvatar } = require('../services/minimax');
+import express from 'express';
+import { generateAvatar } from '../services/minimax.js';
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
